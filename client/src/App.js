@@ -1,15 +1,13 @@
-import './App.css';
-import  TopHeader from './TopHeader.js';
-import {useState} from 'react';
-import { Button } from '@material-ui/core';
+import AppRoute from './utils/AppRoute';
+// Layouts
+import LayoutDefault from './layouts/LayoutDefault';
+// Views 
+import Home from './views/Home';
 
 
 function App() {
-  
   return (
-    <div>
-      <TopHeader></TopHeader>
-    </div>
+    <AppRoute component={Home} layout={LayoutDefault} />
   );
 }
 
