@@ -2,15 +2,17 @@ import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import Button from '@mui/material/Button';
+import Header from '../components/layout/Header'
+
 const getDesignTokens = () => ({
     palette: {    
         // palette values for dark mode
         primary: {
-            main:'#4A4BB8',//deepPurple
+            main: '#5658DD',//deepPurple
         },
         secondary:{
-            main:'#2A2D32' //Darkgrey deep100
+            light: '#ECEDED',
+            main: '#2A2D32' //Darkgrey deep100
         },
         background: {
             default: '#151719', //darkgrey deep150
@@ -19,6 +21,10 @@ const getDesignTokens = () => ({
             primary:  '#7D8790', //grey deep50
             secondary: '#ECEDED', //white
         },
+        image:{
+            height: '100%',
+            width: '100%',
+        }
             
     },
 });
@@ -31,8 +37,8 @@ const LayoutDefault = ({ children }) => (
     <ThemeProvider theme={theme}>
         <CssBaseline />
             <Container fixed >
+                <Header></Header>
                 <>{children}</>
-                <Button color="primary">test</Button>
             </Container>
     </ThemeProvider>
   );
