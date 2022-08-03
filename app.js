@@ -5,13 +5,23 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var cors = require('cors');
+var mysql = require('mysql');
+
+const connection = mysql.createConnection({
+     host : "localhost",//"192.168.56.1",
+     port: '3306',
+	 user : "root",
+	 password : "tlstprb",
+     database:"testdb"
+})
+
 
 app.use(express.json());
 app.use(cors());
 
 //DB 전달 예시, client-side rendering
 app.get('/test',function(req,res){
-    res.json({name:'black shoes'});
+    res.json({name:'black shoes', value:'this is funny'});
 })
 
 //해당 경로의 static file들을 사용하겠다.
@@ -28,5 +38,13 @@ app.get('/', function(req, res) {
 
 // express 서버를 실행할 때 필요한 포트 정의 및 실행 시 callback 함수를 받습니다
 app.listen(3030, function() {
+    connection.connect();
+    const sql = "SELECT * FROM `topic`"; 
+
+connection.query(sql, function(err, rows, fields){
+	if(err) console.log('err : '+err);
+    console.log(rows);
+    });
+connection.end();
     console.log('start! express server');
 })
