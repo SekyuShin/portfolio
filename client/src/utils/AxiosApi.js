@@ -7,7 +7,7 @@ function AxiosApi() {
 
     // 통신 메서드
     function searchApi() {
-        const url = 'http://localhost:3030/test';
+        const url = 'http://localhost:3030/test/1';
         console.log("searchApi");
         Axios.get(url)
         .then(function(response) {

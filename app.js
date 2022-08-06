@@ -6,6 +6,7 @@ var app = express();
 var path = require('path');
 var cors = require('cors');
 var mysql = require('mysql');
+var makeSql = require('./makeSql');
 
 const connection = mysql.createConnection({
      host : "192.168.1.43",//"192.168.56.1",
@@ -20,9 +21,21 @@ app.use(express.json());
 app.use(cors());
 
 //DB 전달 예시, client-side rendering
-app.get('/test',function(req,res){
-    res.json({name:'black shoes', value:'this is funny'});
+app.get('/test/*',function(req,res){
+    console.log(`test : ${makeSql.pathParsing(req.path)}`);
+    res.json({name:'black shoes', value:'this is funny,'+req.json});
 })
+app.get('/projects/*',function(req,res){
+    connection.connect();
+    const sql = makeSql.pathParsing(req.path);
+
+    connection.query(sql, function(err, rows, fields){
+        if(err) console.log('err : '+err);
+        console.log(rows);
+        });
+    connection.end();
+})
+
 
 //해당 경로의 static file들을 사용하겠다.
 app.use(express.static(path.join(__dirname,'client/build'))); 
@@ -38,13 +51,6 @@ app.get('/', function(req, res) {
 
 // express 서버를 실행할 때 필요한 포트 정의 및 실행 시 callback 함수를 받습니다
 app.listen(3030, function() {
-    connection.connect();
-    const sql = "SELECT * FROM `topic`"; 
 
-connection.query(sql, function(err, rows, fields){
-	if(err) console.log('err : '+err);
-    console.log(rows);
-    });
-connection.end();
     console.log('start! express server');
 })
