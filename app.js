@@ -5,16 +5,8 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var cors = require('cors');
-var mysql = require('mysql');
-var makeSql = require('./makeSql');
+var connMySql = require('./connMySql');
 
-const connection = mysql.createConnection({
-     host : "192.168.1.43",//"192.168.56.1",
-     port: '3306',
-	 user : "sekyu",
-	 password : 'tprb1191',
-     database:"testDB"
-})
 
 
 app.use(express.json());
@@ -22,18 +14,10 @@ app.use(cors());
 
 //DB 전달 예시, client-side rendering
 app.get('/test/*',function(req,res){
-    console.log(`test : ${makeSql.pathParsing(req.path)}`);
     res.json({name:'black shoes', value:'this is funny,'+req.json});
 })
 app.get('/projects/*',function(req,res){
-    connection.connect();
-    const sql = makeSql.pathParsing(req.path);
-
-    connection.query(sql, function(err, rows, fields){
-        if(err) console.log('err : '+err);
-        console.log(rows);
-        });
-    connection.end();
+    connMySql.connect(req.path);
 })
 
 
