@@ -37,14 +37,14 @@ function pathParsing (path){
 }
 
 exports.connect = function(path) {
-    connection.connect();
+    //connection.connect(); //connection 변수와 중복으로 인한 오류
     const sql = pathParsing(path);
     
     console.log("sql :`${sql}` : ",sql);
     connection.query(sql, function(err, rows, fields){
-        if(err) console.log('err : '+err);
-        console.log(rows);
+        if(err) throw err;
+        else console.log(rows);
         });
-    //connection.end(); //Error code: 'PROTOCOL_ENQUEUE_AFTER_QUIT',
-                        //code: 'PROTOCOL_ENQUEUE_HANDSHAKE_TWICE',
+   // connection.end(); //Error code: 'PROTOCOL_ENQUEUE_AFTER_QUIT', //connection 변수와 중복으로 인한 오류
+
 }
