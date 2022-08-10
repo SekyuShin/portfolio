@@ -20,10 +20,12 @@ const connection = mysql.createConnection({
                               - id (자세한 내용)
 */
 function pathParsing (path){
-    var sql = "SELECT id, type, name, descriptions FROM testDB.projects WHERE type = \"Main Projects\";";
+   
+    //var sql = "SELECT id, type, name, descriptions FROM testDB.projects WHERE type = \"Main Projects\";";
     //var sql = "SELECT * FROM testDB.projects WHERE type=\"Main Projects\" AND id = 2;";
+    var sql = "";
     var projectType = "";
-    var id = "";
+
     const tmpPath = path.split('/');
     if(tmpPath.length<4) return '';
     if(tmpPath[2] === 'main') projectType = "Main Projects";
@@ -43,8 +45,11 @@ exports.connect = function(path) {
     console.log("sql :`${sql}` : ",sql);
     connection.query(sql, function(err, rows, fields){
         if(err) throw err;
-        else console.log(rows);
-        });
+        else {
+            console.log(rows);
+            return rows;
+        }
+    });
    // connection.end(); //Error code: 'PROTOCOL_ENQUEUE_AFTER_QUIT', //connection 변수와 중복으로 인한 오류
 
 }

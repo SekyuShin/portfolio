@@ -7,12 +7,12 @@ function AxiosApi() {
 
     // 통신 메서드
     function searchApi() {
-        const url = 'http://localhost:3030/test/1';
+        const url = 'http://192.168.1.43:3030/projects/main/1';
         console.log("searchApi");
         Axios.get(url)
         .then(function(response) {
-            console.log("response" + response);
-            setTest(response.data.name+', '+response.data.value);
+            console.log("response" + response.data);
+            setTest(response.data.id + ", " +response.data.name);
         })
         .catch(function(error) {
             console.log("error"+error);
