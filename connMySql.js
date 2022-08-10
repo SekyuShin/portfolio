@@ -46,7 +46,7 @@ exports.connect = function(path) {
     connection.query(sql, function(err, rows, fields){
         if(err) throw err;
         else {
-            console.log(rows);
+            //console.log(rows);
             return rows;
         }
     });

@@ -17,7 +17,9 @@ app.get('/test/*',function(req,res){
     res.json({name:'black shoes', value:'this is funny,'+req.json});
 })
 app.get('/projects/*',function(req,res){
-    res.send(connMySql.connect(req.path));
+    const rt = connMySql.connect(req.path);
+    console.log(rt);
+    res.send(rt);
 })
 
 
