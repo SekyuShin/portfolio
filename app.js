@@ -19,7 +19,7 @@ app.get('/test/*',function(req,res){
 app.get('/projects/*',function(req,res){
     const rt = connMySql.connect(req.path);
     console.log(rt);
-    res.send(rt);
+    res.json(rt);
 })
 
 
