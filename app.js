@@ -17,9 +17,14 @@ app.get('/test/*',function(req,res){
     res.json({name:'black shoes', value:'this is funny,'+req.json});
 })
 app.get('/projects/*',function(req,res){
-    const rt = connMySql.connect(req.path);
-    console.log(rt);
-    res.json(rt);
+    
+    //const rt = connMySql.connect(req.path);
+    connMySql.connect(req.path).then(function(data) {
+        console.log(data);
+        res.json(data);
+    }).catch(function(err) {
+        console.log(err);
+    });
 })
 
 

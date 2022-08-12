@@ -37,21 +37,29 @@ function pathParsing (path){
     
     return sql;
 }
-
 exports.connect = function(path) {
-    //connection.connect(); //connection 변수와 중복으로 인한 오류
-    const sql = pathParsing(path);
-    let result;
-    console.log("sql :`${sql}` : ",sql);
-    connection.query(sql, function(err, rows, fields){
-        if(err) throw err;
-        else {
-            result = JSON.stringify(rows);
-            //현재 return보다 출력이 먼저된다. 비동기식으로 진행해야한다.
-            console.log(result);
-        }
-        return result;
+    return new Promise(function(resolve,reject) {
+        const sql = pathParsing(path);
+        console.log("sql :`${sql}` : ",sql);
+        connection.query(sql, function(err, rows, fields){
+            if(err) reject(new Error('error'));
+            else resolve(rows);
+        });
     });
+}
+// exports.connect = function(path) {
+//     //connection.connect(); //connection 변수와 중복으로 인한 오류
+//     const sql = pathParsing(path);
+//     let result;
+//     console.log("sql :`${sql}` : ",sql);
+//     connection.query(sql, function(err, rows, fields){
+//         if(err) throw err;
+//         else {
+//             result = JSON.stringify(rows);
+//             //현재 return보다 출력이 먼저된다. 비동기식으로 진행해야한다.
+//             console.log(result);
+//         }
+//         return result;
+//     });
    // connection.end(); //Error code: 'PROTOCOL_ENQUEUE_AFTER_QUIT', //connection 변수와 중복으로 인한 오류
 
-}
